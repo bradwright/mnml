@@ -16,6 +16,8 @@ MNML's core philosophy is that I really love writing Python and want to do that 
 * Does not dictate the template or ORM layer you should use - MNML is strictly about URL routing and serving, and tools needed to do so; and mostly
 * Lets the implementer write Python, not a sub-set of Python.
 
+Finally, MNML will be covered by extensive unit tests!
+
 Recommended Extensions
 ----------------------
 
