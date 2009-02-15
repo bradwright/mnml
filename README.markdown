@@ -21,6 +21,8 @@ Finally, MNML will be covered by extensive unit tests!
 TODO
 ----
 
+### Must haves
+
 * Unit tests;
 * URL reversing;
 * Shortcuts for redirects, gone, 404 etc;
@@ -33,6 +35,10 @@ TODO
             pass`;
 * More unit tests;
 * Production WSGI interface for Apache etc.
+
+### Maybes
+
+* SCGI support so Google App Engine can run it
 
 Recommended Extensions
 ----------------------
