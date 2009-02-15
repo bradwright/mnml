@@ -13,7 +13,7 @@ MNML's core philosophy is that I really love writing Python and want to do that 
 * Provides methods for all HTTP method verbs (`PUT` and `DELETE` are supported);
 * Provides flexible regular expression matching for URLs with the ability to reverse said URLs (like Django's `reverse` function);
 * Provides the ability to add middleware functions so one can alter the request or response as required;
-* Does not dictate the template or ORM layer you should use - MNML is strictly about URL routing and serving, and tools needed to do so; and mostly
+* Does not dictate the template or ORM layer you should use--MNML is strictly about URL routing and serving, and tools needed to do so; and mostly
 * Lets the implementer write Python, not a sub-set of Python.
 
 Finally, MNML will be covered by extensive unit tests!
