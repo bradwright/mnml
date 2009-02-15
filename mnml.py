@@ -1,3 +1,7 @@
+# NOTE:
+# At the moment this script borrows fairly heavily from newf, since that's 
+# basically the bare minimum code required for a routed WSGI framework.
+
 import cgi
 import re
 
@@ -30,7 +34,7 @@ class HttpRequest(object):
         # like PHP's $_REQUEST - but you should usually be more explicit
         self.REQUEST = self.GET.copy()
         self.REQUEST.update(self.POST)
-
+    
 
 class HttpResponse(object):
     """A single HTTP response"""
