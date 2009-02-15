@@ -18,6 +18,22 @@ MNML's core philosophy is that I really love writing Python and want to do that 
 
 Finally, MNML will be covered by extensive unit tests!
 
+TODO
+----
+
+* Unit tests;
+* URL reversing;
+* Shortcuts for redirects, gone, 404 etc;
+* Support for middleware (required for sessions at the least);
+* Support `web.py` style method routing: `
+    class MyRoute(object):
+        def GET(self, request):
+            pass
+        def POST(self, request):
+            pass`;
+* More unit tests;
+* Production WSGI interface for Apache etc.
+
 Recommended Extensions
 ----------------------
 
