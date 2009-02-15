@@ -23,7 +23,6 @@ class HttpRequest(object):
         
         if len(environ['QUERY_STRING']):
             self.GET = cgi.parse_qs(environ['QUERY_STRING'])
-            print self.GET
         
         if self.method == 'POST':
             self.POST = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ, keep_blank_values=1)
