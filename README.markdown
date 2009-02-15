@@ -38,7 +38,9 @@ TODO
 
 ### Maybes
 
-* SCGI support so Google App Engine can run it
+* SCGI support so Google App Engine can run it;
+* De-couple routes from system so people can roll their own (using `/resource/:arg/`, for example);
+* Response middleware to doctor the response.
 
 Recommended Extensions
 ----------------------
