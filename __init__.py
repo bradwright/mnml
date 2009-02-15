@@ -53,11 +53,11 @@ class HttpResponse(object):
     def __init__(self, content='', headers={}, status_code=200):
         self.status_code = status_code
         self.set_content(content)
-        self.headers = headers
-        self.headers['content-length'] = str(len(content))
+        self._headers = headers
+        self._headers['content-length'] = str(len(content))
         
         if not 'content-type' in self.headers:
-            self.headers['content-type'] = 'text/html'
+            self._headers['content-type'] = 'text/html'
     
     def get_status(self):
         if self.status_code not in self.status_codes:
@@ -68,15 +68,15 @@ class HttpResponse(object):
         self.status_code = code
     
     def get_headers(self):
-        return list(self.headers.iteritems())
+        return list(self._headers.iteritems())
     
     def set_headers(self, *args):
         """takes either a key/value or a dictionary"""
         if type(args[0]).__name__ == 'dict':
-            self.headers.update(args[0])
+            self._headers.update(args[0])
         else:
             key, value = args
-            self.headers[key] = value
+            self._headers[key] = value
     
     def get_content(self):
         return [self._content, '\n']
@@ -89,7 +89,7 @@ class HttpResponse(object):
     
     content = property(get_content, set_content)
     status = property(get_status, set_status)
-    #headers = property(get_headers, set_headers)
+    headers = property(get_headers, set_headers)
 
 
 class WebApplication(object):
