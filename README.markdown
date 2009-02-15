@@ -8,6 +8,7 @@ Core Philosophy
 
 MNML's core philosophy is that I really love writing Python and want to do that for most things, but I also want a certain level of "plumbing" taken care of for me. In addition, MNML:
 
+* Is strictly WSGI;
 * Provides URL mapping to HTTP response relationship, aka routing;
 * Provides methods for all HTTP method verbs (`PUT` and `DELETE` are supported);
 * Provides flexible regular expression matching for URLs with the ability to reverse said URLs (like Django's `reverse` function);
