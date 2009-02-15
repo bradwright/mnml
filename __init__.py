@@ -54,6 +54,7 @@ class HttpResponse(object):
         self.status_code = status_code
         self.set_content(content)
         self.headers = headers
+        self.headers['content-length'] = str(len(content))
         
         if not 'content-type' in self.headers:
             self.headers['content-type'] = 'text/html'
