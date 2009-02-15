@@ -140,6 +140,12 @@ class WebApplication(object):
         start_response(response.status, response.get_headers())
         return response.content
     
+    def dev_run(self, port=8000):
+        from wsgiref.simple_server import make_server
+        server = make_server('', port, self)
+        print 'MNML now running on http://127.0.0.1:%s\n' % port
+        server.serve_forever()
+    
 
 if __name__ == '__main__':
     """run the basic server"""
@@ -153,9 +159,7 @@ if __name__ == '__main__':
     web_app = WebApplication(routes)
     
     try:
-        from wsgiref.simple_server import make_server
-        server = make_server('', 8000, web_app)
-        server.serve_forever()
+        web_app.dev_run(8000)
     except KeyboardInterrupt:
         import sys
         print "Server stopping"
