@@ -98,23 +98,23 @@ class HttpResponse(object):
 class WebApplication(object):
     """The actual serving of Python code is done here"""
     def __init__(self, routes):
-        self.routes = tuple((re.compile(a), b) for a,b in routes)
+        self.routes = routes
     
     def __call__(self, environ, start_response):
         request = HttpRequest(environ)
         response = None
         
-        for route in self.routes:
-            url, view = route
-            match = url.match(environ['PATH_INFO'])
-            if match:
+        for pair in self.routes:
+            route, view = pair
+            matches = re.match(route_master(route), environ['PATH_INFO'])
+            if matches:
                 if hasattr(view, '__call__'):
                     to_call = view
                 else:
                     # TODO: do this better
                     to_call = eval(view)
                 try:
-                    response = to_call(request, **match.groupdict())
+                    response = to_call(request, **matches.groupdict())
                 except Exception, error:
                     # either the function failed, or it doesn't exist
                     # TODO: log missing functions
@@ -147,14 +147,53 @@ class WebApplication(object):
         server.serve_forever()
     
 
+def route_master(route):
+    """returns a compiled regular expression"""
+    # chop off leading slash
+    if route.startswith('/'):
+        route = route[1:]
+        
+    trailing_slash = False
+    # check end slash and remember to keep it
+    if route.endswith('/'):
+        route = route[:-1]
+        trailing_slash = True
+        
+    # split into path components
+    bits = route.split('/')
+    
+    # compiled match starts with a slash,
+    #  so we make it a list so we can join later
+    regex = ['']
+    for path_component in bits:
+        if path_component.startswith(':'):
+            # it's a route, so compile
+            name = path_component[1:]
+            # accept only valid URL characters
+            regex.append(r'(?P<%s>[-_a-zA-Z0-9+%%]+)' % name)
+        else:
+            # just a string/static path component
+            regex.append(path_component)
+            
+    # stick the trailing slash back on
+    if trailing_slash:
+        regex.append('')
+        
+    # stitch it back together as a path
+    return '^%s$' % '/'.join(regex)
+
 if __name__ == '__main__':
     """run the basic server"""
     routes = (
-        (r'^/$', 'homepage'),
+        ('/', 'homepage'),
+        ('/myview/:stuff/', 'other_thing')
     )
     
     def homepage(request):
         return HttpResponse('hello world!')
+    
+    def other_thing(request, stuff):
+        return HttpResponse('found stuff: %s!' % stuff)
     
     web_app = WebApplication(routes)
     
