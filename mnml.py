@@ -98,7 +98,8 @@ class HttpResponse(object):
 class WebApplication(object):
     """The actual serving of Python code is done here"""
     def __init__(self, routes):
-        self.routes = routes
+        # cache routes
+        self.routes = [(re.compile(route_master(pair[0])), pair[1]) for pair in routes]
     
     def __call__(self, environ, start_response):
         request = HttpRequest(environ)
@@ -106,7 +107,7 @@ class WebApplication(object):
         
         for pair in self.routes:
             route, view = pair
-            matches = re.match(route_master(route), environ['PATH_INFO'])
+            matches = route.match(environ['PATH_INFO'])
             if matches:
                 if hasattr(view, '__call__'):
                     to_call = view
