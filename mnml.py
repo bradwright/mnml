@@ -141,11 +141,20 @@ class WebApplication(object):
         start_response(response.status, response.get_headers())
         return response.content
     
+    def run(self):
+        from wsgiref.handlers import BaseHandler
+        handler = BaseHandler()
+        handler.run(self)
+    
     def dev_run(self, port=8000):
         from wsgiref.simple_server import make_server
         server = make_server('', port, self)
         print 'MNML now running on http://127.0.0.1:%s\n' % port
-        server.serve_forever()
+        try:
+            server.serve_forever()
+        except:
+            print 'MNML stopping...'
+            server.socket.close()
     
 
 def route_master(route):
