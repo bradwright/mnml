@@ -59,7 +59,7 @@ class HttpResponse(object):
         self._headers = headers
         self._headers['content-length'] = str(len(content))
         
-        if not 'content-type' in self.headers:
+        if not headers.get('content-type'):
             self._headers['content-type'] = 'text/html'
     
     def get_status(self):
@@ -82,7 +82,11 @@ class HttpResponse(object):
             self._headers[key] = value
     
     def get_content(self):
-        return [self._content, '\n']
+        # content-type is always set because of the init method, so don't need 
+        # to check for its existence
+        if self._headers['content-type'].startswith('text'):
+            return [self._content, '\n']
+        return [self._content]
     
     def set_content(self, value):
         # http://www.python.org/dev/peps/pep-0333/#unicode-issues
