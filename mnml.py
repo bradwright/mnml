@@ -59,7 +59,7 @@ class HttpResponse(object):
         self._headers = headers
         self._headers['content-length'] = str(len(content))
         
-        if not headers.get('content-type'):
+        if not self._headers.get('content-type'):
             self._headers['content-type'] = 'text/html'
     
     def get_status(self):
